@@ -103,4 +103,86 @@ Enter profit for object 3: 120
 
 Result vector is:  1 1 0.666667
 Total profit is 240
+
+#include <iostream>
+using namespace std;
+class Item
+{
+public:
+    int weight;
+    int value;
+    double vw;
+};
+
+void BubbleSort(Item obj[], int num)
+{
+    for (int i = 0; i < num; i++)
+    {
+        for (int j = 0; j < num; j++)
+        {
+            if (obj[j].vw < obj[j + 1].vw)
+            {
+                swap(obj[j + 1], obj[j]);
+            }
+        }
+    }
+}
+double fractionKnapsack(Item obj[], int capacity, int num)
+{
+    BubbleSort(obj, num);
+    double profit = 0.0;
+    for (int i = 0; i < num; i++)
+    {
+        if (obj[i].weight <= capacity)
+        {
+            profit = profit + obj[i].value;
+            capacity = capacity - obj[i].weight;
+        }
+        else
+        {
+            profit = profit + (double(obj[i].value) * (double(capacity) / obj[i].weight));
+            break;
+        }
+    }
+    return profit;
+}
+
+int main()
+{
+    int numOfItem;
+    cout << "Enter Number fo Item :- ";
+    cin >> numOfItem;
+    int capacity;
+    cout << "Enter Capacity Of Bag :- ";
+    cin >> capacity;
+    Item obj[numOfItem];
+    // obj[0].weight = 10;
+    // cout<<obj[0].weight;
+    for (int i = 0; i < numOfItem; i++)
+    {
+        cout << "Entet Weight Of Item :- ";
+        cin >> obj[i].weight;
+        cout << "Enter Value Of Item :- ";
+        cin >> obj[i].value;
+        obj[i].vw = obj[i].value / double(obj[i].weight);
+    }
+    cout << "\n";
+    for (int i = 0; i < numOfItem; i++)
+    {
+        cout << "Weight Of Item :- " << obj[i].weight << "\n";
+        cout << "Value Of Item :- " << obj[i].value << "\n";
+        cout << "ratio of value and weight :- " << obj[i].vw << "\n";
+    }
+    cout << "\n";
+    BubbleSort(obj, numOfItem);
+    for (int i = 0; i < numOfItem; i++)
+    {
+        cout << "Weight Of Item :- " << obj[i].weight << "\n";
+        cout << "Value Of Item :- " << obj[i].value << "\n";
+        cout << "ratio of value and weight :- " << obj[i].vw << "\n";
+    }
+    cout << "\n"
+         << fractionKnapsack(obj, capacity, numOfItem);
+    return 0;
+}
 */
